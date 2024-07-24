@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -10,6 +10,8 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
+import SimilarMovies from "../similarMovies";
+import { getSimilarMovies } from "../../api/tmdb-api";
 
 const styles = {
     chipSet: {
@@ -34,7 +36,21 @@ const styles = {
 const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
 
     const [drawerOpen, setDrawerOpen] = useState(false); // New
+    const [similarMovies, setSimilarMovies] = useState<MovieDetailsProps[]>([]);
 
+    useEffect(() => {
+        const fetchSimilarMovies = async () => {
+          try {
+            const movies = await getSimilarMovies(movie.id);
+            setSimilarMovies(movies.slice(0,8));
+          } catch (error) {
+            console.error("Failed to fetch similar movies", error);
+          }
+        };
+    
+        fetchSimilarMovies();
+      }, [movie.id]);
+    
     return (
         <>
             <Typography variant="h5" component="h3">
@@ -79,6 +95,8 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews {...movie} />
             </Drawer>
+            
+            <SimilarMovies movies={similarMovies} />
         </>
     );
 };
