@@ -82,3 +82,16 @@ export interface BaseMovieProps {
     rating: number,
     movieId: number,
   }
+
+  export interface BaseTVSeriesProps extends BaseMovieProps {
+    first_air_date: string;
+    episode_count?: number;
+    season_count?: number;
+  }
+  
+  export interface DiscoverTVSeries {
+    page: number;
+    total_pages: number;
+    total_results: number;
+    results: BaseTVSeriesProps[];
+  }
