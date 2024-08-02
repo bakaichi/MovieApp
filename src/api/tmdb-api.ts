@@ -104,3 +104,66 @@ export const getMovie = (id: string) => {
         throw error;
       });
   };
+
+  export const getTVSeriesDetails = (id: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to get TV series details. Response status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
+  
+  export const getSimilarTVSeries = (id: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/${id}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch similar TV series. Response status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => json.results)
+      .catch((error) => {
+        throw error;
+      });
+  };
+  
+  export const getTVSeriesActors = (id: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch TV series actors. Response status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => json.cast)
+      .catch((error) => {
+        throw error;
+      });
+  };
+
+  export const getTVSeriesImages = (id: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch TV series images");
+        }
+        return response.json();
+      })
+      .then((json) => json.posters) // Return the posters array
+      .catch((error) => {
+        throw error;
+      });
+  };

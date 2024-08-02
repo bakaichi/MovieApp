@@ -95,3 +95,42 @@ export interface BaseMovieProps {
     total_results: number;
     results: BaseTVSeriesProps[];
   }
+  
+  export interface TVSeriesDetailsProps extends BaseTVSeriesProps {
+    genres: {
+      id: number;
+      name: string;
+    }[];
+    seasons: {
+      season_number: number;
+      episode_count: number;
+    }[];
+    number_of_seasons: number;
+    number_of_episodes: number;
+    homepage: string;
+  }
+  
+  export interface Actor {
+    id: number;
+    name: string;
+    character: string;
+    profile_path: string;
+  }
+
+  export interface BaseTVSeriesProps {
+    id: number;
+    name: string;
+    overview: string;
+    vote_average: number;
+    popularity: number;
+    poster_path?: string;
+    first_air_date: string;
+    genre_ids?: number[];
+    origin_country: string[];
+  }
+  
+  export interface BaseTVSeriesListProps {
+    series: BaseTVSeriesProps[];
+    action: (s: BaseTVSeriesProps) => React.ReactNode;
+    title?: string; 
+  }
