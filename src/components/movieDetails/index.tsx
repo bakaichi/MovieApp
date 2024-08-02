@@ -13,6 +13,7 @@ import MovieReviews from '../movieReviews'
 import SimilarMovies from "../similarMovies";
 import { getSimilarMovies } from "../../api/tmdb-api";
 
+
 const styles = {
     chipSet: {
         display: "flex",
@@ -34,33 +35,30 @@ const styles = {
 };
 
 const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
-
-    const [drawerOpen, setDrawerOpen] = useState(false); // New
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [similarMovies, setSimilarMovies] = useState<MovieDetailsProps[]>([]);
 
     useEffect(() => {
         const fetchSimilarMovies = async () => {
           try {
             const movies = await getSimilarMovies(movie.id);
-            setSimilarMovies(movies.slice(0,8));
+            setSimilarMovies(movies.slice(0, 8));
           } catch (error) {
             console.error("Failed to fetch similar movies", error);
           }
         };
-    
+
         fetchSimilarMovies();
-      }, [movie.id]);
-    
+    }, [movie.id]);
+
     return (
         <>
             <Typography variant="h5" component="h3">
                 Overview
             </Typography>
-
             <Typography variant="h6" component="p">
                 {movie.overview}
             </Typography>
-
             <Paper component="ul" sx={styles.chipSet}>
                 <li>
                     <Chip label="Genres" sx={styles.chipLabel} color="primary" />
@@ -79,7 +77,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
                 />
                 <Chip
                     icon={<StarRate />}
-                    label={`${movie.vote_average} (${movie.vote_count}`}
+                    label={`${movie.vote_average} (${movie.vote_count})`}
                 />
                 <Chip label={`Released: ${movie.release_date}`} />
             </Paper>
@@ -95,9 +93,9 @@ const MovieDetails: React.FC<MovieDetailsProps> = (movie) => {
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews {...movie} />
             </Drawer>
-            
             <SimilarMovies movies={similarMovies} />
         </>
     );
 };
+
 export default MovieDetails;

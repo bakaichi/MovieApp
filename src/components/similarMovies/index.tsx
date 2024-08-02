@@ -1,8 +1,10 @@
 import React from "react";
 import { BaseMovieProps } from "../../types/interfaces";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 interface SimilarMoviesProps {
   movies: BaseMovieProps[];
@@ -10,7 +12,7 @@ interface SimilarMoviesProps {
 
 const SimilarMovies: React.FC<SimilarMoviesProps> = ({ movies }) => {
   return (
-    <div style={{ marginTop: "40px" }}>
+    <div style={{ marginTop: "20px" }}>
       <Typography variant="h5" component="h3" gutterBottom>
         Similar Movies
       </Typography>
@@ -26,6 +28,11 @@ const SimilarMovies: React.FC<SimilarMoviesProps> = ({ movies }) => {
               <Typography variant="h6" component="p">
                 {movie.title}
               </Typography>
+              <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+                <Button variant="contained" color="primary" style={{ marginTop: '10px' }}>
+                  More Info
+                </Button>
+              </Link>
             </Paper>
           </Grid>
         ))}
