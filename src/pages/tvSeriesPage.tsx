@@ -1,5 +1,5 @@
 import React from "react";
-import TVSeriesListPageTemplate from "../components/templateTVSeriesListPage"; // Ensure the path is correct
+import TVSeriesListPageTemplate from "../components/templateTVSeriesListPage";
 import { useQuery } from "react-query";
 import { getTVSeries } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
@@ -60,9 +60,9 @@ const TVSeriesPage: React.FC = () => {
         action={(series: BaseTVSeriesProps) => (
           <>
             <AddToFavouritesIcon {...series} />
-            <Link to={`/tv-series/${series.id}`} style={{ textDecoration: "none" }}>
-              <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
-                More Info
+            <Link to={`/tv-series/${series.id}`}>
+              <Button variant="outlined" size="medium" color="primary">
+                More Info ...
               </Button>
             </Link>
           </>

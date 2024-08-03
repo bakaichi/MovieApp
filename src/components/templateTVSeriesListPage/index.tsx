@@ -2,7 +2,7 @@ import React from "react";
 import TVSeriesCard from "../tvSeriesCard";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { BaseTVSeriesListProps } from "../../types/interfaces"; // Make sure this is the correct path
+import { BaseTVSeriesListProps } from "../../types/interfaces";
 
 const TVSeriesListPageTemplate: React.FC<BaseTVSeriesListProps> = ({ series, action, title }) => {
     return (
@@ -12,8 +12,8 @@ const TVSeriesListPageTemplate: React.FC<BaseTVSeriesListProps> = ({ series, act
             variant="h4"
             component="h2"
             gutterBottom
-            align="center"  // Center the title
-            style={{ marginTop: '20px' }} // Add some top margin
+            align="center"
+            style={{ marginTop: '20px' }}
           >
             {title}
           </Typography>
@@ -27,6 +27,6 @@ const TVSeriesListPageTemplate: React.FC<BaseTVSeriesListProps> = ({ series, act
         </Grid>
       </>
     );
-  };
-  
-  export default TVSeriesListPageTemplate;
+};
+
+export default TVSeriesListPageTemplate;
