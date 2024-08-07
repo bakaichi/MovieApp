@@ -2,17 +2,8 @@ import React, { useState } from "react";
 import FilterCard from "../filterMoviesCard";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
+import { MovieFilterUIProps } from "../../types/interfaces";
 import { BaseMovieProps } from "../../types/interfaces";
-
-export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
-    return movie.title.toLowerCase().search(value.toLowerCase()) !== -1;
-};
-
-export const genreFilter = (movie: BaseMovieProps, value: string) => {
-    const genreId = Number(value);
-    const genreIds = movie.genre_ids;
-    return genreId > 0 && genreIds ? genreIds.includes(genreId) : true;
-};
 
 const styles = {
     root: {
@@ -26,14 +17,33 @@ const styles = {
     },
 };
 
-interface MovieFilterUIProps {
-    onFilterValuesChange: (f: string, s: string) => void;
-    titleFilter: string;
-    genreFilter: string;
-}
-
-
-const MovieFilterUI: React.FC<MovieFilterUIProps> = ({ onFilterValuesChange, titleFilter, genreFilter }) => {
+export const titleFilter = (movie: BaseMovieProps, value: string): boolean => {
+    return movie.title.toLowerCase().includes(value.toLowerCase());
+  };
+  
+  export const genreFilter = (movie: BaseMovieProps, value: string): boolean => {
+    const genreId = Number(value);
+    return genreId === 0 || (movie.genre_ids?.includes(genreId) ?? false);
+  };
+  export const releaseYearFilter = (movie: BaseMovieProps, value: string): boolean => {
+    if (!value) return true;
+    const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : 0;
+    return releaseYear === parseInt(value, 10);
+  };
+  
+  export const releaseYearSort = (a: BaseMovieProps, b: BaseMovieProps, order: string): number => {
+    const yearA = a.release_date ? new Date(a.release_date).getFullYear() : 0;
+    const yearB = b.release_date ? new Date(b.release_date).getFullYear() : 0;
+    return order === "asc" ? yearA - yearB : yearB - yearA;
+  };
+  
+    const MovieFilterUI: React.FC<MovieFilterUIProps> = ({
+    onFilterValuesChange,
+        titleFilter,
+        genreFilter,
+        releaseYearFilter,
+        sortOrder
+    }) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     return (
@@ -55,10 +65,11 @@ const MovieFilterUI: React.FC<MovieFilterUIProps> = ({ onFilterValuesChange, tit
                     onUserInput={onFilterValuesChange}
                     titleFilter={titleFilter}
                     genreFilter={genreFilter}
+                    releaseYearFilter={releaseYearFilter} // New
+                    sortOrder={sortOrder}                 // New
                 />
             </Drawer>
-        </>
-    );
-};
-
+            </>
+        );
+    };
 export default MovieFilterUI;

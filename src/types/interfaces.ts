@@ -1,4 +1,4 @@
-export interface BaseMovieProps {
+  export interface BaseMovieProps {
     title: string;
     budget: number;
     homepage: string | undefined;
@@ -43,31 +43,29 @@ export interface BaseMovieProps {
     vote_count?: number;
     width?: number;
   }
-  
+
   export interface MoviePageProps {
     movie: MovieDetailsProps;
     images: MovieImage[];
   }
-  
-  export type FilterOption = "title" | "genre";
 
   export interface MovieListPageTemplateProps extends BaseMovieListProps {
     title: string;
   }
-  
+
   export interface Review{
     id: string;
     content: string
     author: string
   }
-  
+
   export interface GenreData {
     genres: {
       id: string;
       name: string
     }[];
   }
-  
+
   export interface DiscoverMovies {
     page: number;	
     total_pages: number;
@@ -88,14 +86,14 @@ export interface BaseMovieProps {
     episode_count?: number;
     season_count?: number;
   }
-  
+
   export interface DiscoverTVSeries {
     page: number;
     total_pages: number;
     total_results: number;
     results: BaseTVSeriesProps[];
   }
-  
+
   export interface TVSeriesDetailsProps extends BaseTVSeriesProps {
     genres: {
       id: number;
@@ -109,7 +107,7 @@ export interface BaseMovieProps {
     number_of_episodes: number;
     homepage: string;
   }
-  
+
   export interface Actor {
     id: number;
     name: string;
@@ -128,9 +126,35 @@ export interface BaseMovieProps {
     genre_ids?: number[];
     origin_country: string[];
   }
-  
+
   export interface BaseTVSeriesListProps {
     series: BaseTVSeriesProps[];
     action: (s: BaseTVSeriesProps) => React.ReactNode;
     title?: string; 
+  }
+
+  export type FilterOption = "title" | "genre" | "releaseYear" | "sortOrder";
+    
+  export interface Filter {
+      name: string;
+      value: string;
+      condition: (item: any, value: string) => boolean;
+      sort?: (a: any, b: any, order: string) => number; // New sort method
+  }
+
+  export interface MovieFilterUIProps {
+    onFilterValuesChange: (f: FilterOption, s: string) => void;
+    titleFilter: string;
+    genreFilter: string;
+    releaseYearFilter: string; 
+    sortOrder: string;         
+  }
+  
+  // Interface for TVSeriesFilterUI props
+  export interface TVSeriesFilterUIProps {
+    onFilterValuesChange: (f: FilterOption, s: string) => void;
+    titleFilter: string;
+    genreFilter: string;
+    releaseYearFilter: string; // New
+    sortOrder: string;         // New
   }

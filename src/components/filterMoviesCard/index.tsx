@@ -1,5 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { FilterOption, GenreData } from "../../types/interfaces"
+import React from "react";
 import { SelectChangeEvent } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,9 +10,10 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SortIcon from '@mui/icons-material/Sort';
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
+import { FilterOption, GenreData } from "../../types/interfaces";
+import { getGenres } from "../../api/tmdb-api";
 
 const styles = {
   root: {
@@ -28,14 +28,21 @@ const styles = {
   },
 };
 
-
 interface FilterMoviesCardProps {
-  onUserInput: (f: FilterOption, s: string)  => void; // Add this line
+  onUserInput: (f: FilterOption, s: string) => void;
   titleFilter: string;
   genreFilter: string;
+  releaseYearFilter: string; 
+  sortOrder: string;         
 }
 
-const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreFilter, onUserInput }) => {
+const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
+  titleFilter,
+  genreFilter,
+  releaseYearFilter,
+  sortOrder,
+  onUserInput
+}) => {
   const { data, error, isLoading, isError } = useQuery<GenreData, Error>("genres", getGenres);
 
   if (isLoading) {
@@ -49,17 +56,12 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
     genres.unshift({ id: "0", name: "All" });
   }
 
-  const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
-    e.preventDefault()
-      onUserInput(type, value)
-  };
-
-  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleChange(e, "title", e.target.value)
-  }
-  
-  const handleGenreChange = (e: SelectChangeEvent) => {
-    handleChange(e, "genre", e.target.value)
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent,
+    type: FilterOption
+  ) => {
+    const value = e.target.value;
+    onUserInput(type, value);
   };
 
   return (
@@ -77,7 +79,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
           type="search"
           value={titleFilter}
           variant="filled"
-          onChange={handleTextChange}
+          onChange={(e) => handleChange(e, "title")} 
         />
         <FormControl sx={styles.formControl}>
           <InputLabel id="genre-label">Genre</InputLabel>
@@ -85,17 +87,24 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
             labelId="genre-label"
             id="genre-select"
             value={genreFilter}
-            onChange={handleGenreChange}
+            onChange={(e) => handleChange(e, "genre")} 
           >
-            {genres.map((genre) => {
-              return (
+          {genres.map((genre) => (
                 <MenuItem key={genre.id} value={genre.id}>
                   {genre.name}
                 </MenuItem>
-              );
-            })}
+            ))}
           </Select>
         </FormControl>
+          <TextField
+            sx={styles.formControl}
+            id="release-year-search"
+            label="Release Year"
+            type="number"
+            value={releaseYearFilter}
+            variant="filled"
+            onChange={(e) => handleChange(e, "releaseYear")} // Unified handler
+          />
       </CardContent>
     </Card>
     <Card sx={styles.root} variant="outlined">
@@ -104,6 +113,18 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({ titleFilter, genreF
             <SortIcon fontSize="large" />
             Sort the movies.
           </Typography>
+          <FormControl sx={styles.formControl}>
+            <InputLabel id="sort-order-label">Sort Order</InputLabel>
+            <Select
+              labelId="sort-order-label"
+              id="sort-order-select"
+              value={sortOrder}
+              onChange={(e) => handleChange(e, "sortOrder")} // Unified handler
+            >
+              <MenuItem value="asc">Release Year Ascending</MenuItem>
+              <MenuItem value="desc">Release Year Descending</MenuItem>
+            </Select>
+          </FormControl>
         </CardContent>
       </Card>
       </>

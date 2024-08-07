@@ -5,7 +5,7 @@ import { getTVSeries } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import { BaseTVSeriesProps, DiscoverTVSeries } from "../types/interfaces";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
-import TVSeriesFilterUI, { titleFilter, genreFilter } from "../components/tvSeriesFilterUI";
+import TVSeriesFilterUI, { titleFilter, genreFilter, releaseYearFilter, releaseYearSort } from "../components/tvSeriesFilterUI";
 import useFiltering from "../hooks/useFiltering";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -21,10 +21,23 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
+const releaseYearFiltering = {
+  name: "releaseYear",
+  value: "",
+  condition: releaseYearFilter,
+};
+
+const releaseYearSorting = {
+  name: "sortOrder",
+  value: "asc",
+  condition: () => true,
+  sort: releaseYearSort,
+};
+
 const TVSeriesPage: React.FC = () => {
   const { data, error, isLoading, isError } = useQuery<DiscoverTVSeries, Error>("discoverTV", getTVSeries);
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
-    [titleFiltering, genreFiltering]
+  const { filterValues, setFilterValues, filterFunction, sortFunction } = useFiltering(
+    [titleFiltering, genreFiltering, releaseYearFiltering, releaseYearSorting]
   );
 
   if (isLoading) {
@@ -36,14 +49,14 @@ const TVSeriesPage: React.FC = () => {
   }
 
   const tvSeries = data ? data.results : [];
-  const displayedSeries = filterFunction(tvSeries);
+  const filteredSeries = filterFunction(tvSeries);
+  const displayedSeries = sortFunction(filteredSeries);
 
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value: value };
-    const updatedFilterSet =
-      type === "title"
-        ? [changedFilter, filterValues[1]]
-        : [filterValues[0], changedFilter];
+    const updatedFilterSet = filterValues.map(filter =>
+      filter.name === type ? changedFilter : filter
+    );
     setFilterValues(updatedFilterSet);
   };
 
@@ -53,6 +66,8 @@ const TVSeriesPage: React.FC = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
+        releaseYearFilter={filterValues[2].value} // New
+        sortOrder={filterValues[3].value}         // New
       />
       <TVSeriesListPageTemplate
         title="Discover TV Series"
