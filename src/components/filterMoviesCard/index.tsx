@@ -119,7 +119,7 @@ const FilterMoviesCard: React.FC<FilterMoviesCardProps> = ({
               labelId="sort-order-label"
               id="sort-order-select"
               value={sortOrder}
-              onChange={(e) => handleChange(e, "sortOrder")} // Unified handler
+              onChange={(e) => handleChange(e, "sortOrder")} 
             >
               <MenuItem value="asc">Release Year Ascending</MenuItem>
               <MenuItem value="desc">Release Year Descending</MenuItem>
