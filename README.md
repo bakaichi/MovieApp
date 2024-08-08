@@ -6,3 +6,4 @@
 - Similiar series suggested in detail view
 - UI improvements for TV series 
 - Extended filtering for Movies and TV series (search by year, sort by asc or desc)
+- Pagination for TV series and Movies list pages

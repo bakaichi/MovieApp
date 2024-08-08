@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TVSeriesListPageTemplate from "../components/templateTVSeriesListPage";
 import { useQuery } from "react-query";
 import { getTVSeries } from "../api/tmdb-api";
@@ -9,6 +9,7 @@ import TVSeriesFilterUI, { titleFilter, genreFilter, releaseYearFilter, releaseY
 import useFiltering from "../hooks/useFiltering";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Pagination from "../Pagination";
 
 const titleFiltering = {
   name: "title",
@@ -35,9 +36,15 @@ const releaseYearSorting = {
 };
 
 const TVSeriesPage: React.FC = () => {
-  const { data, error, isLoading, isError } = useQuery<DiscoverTVSeries, Error>("discoverTV", getTVSeries);
+  const [currentPage, setCurrentPage] = useState(1);
   const { filterValues, setFilterValues, filterFunction, sortFunction } = useFiltering(
     [titleFiltering, genreFiltering, releaseYearFiltering, releaseYearSorting]
+  );
+
+  const { data, error, isLoading, isError } = useQuery<DiscoverTVSeries, Error>(
+    ["discoverTV", currentPage],
+    () => getTVSeries(currentPage),
+    { keepPreviousData: true, staleTime: 5000 }
   );
 
   if (isLoading) {
@@ -60,14 +67,18 @@ const TVSeriesPage: React.FC = () => {
     setFilterValues(updatedFilterSet);
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <>
       <TVSeriesFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
-        releaseYearFilter={filterValues[2].value} // New
-        sortOrder={filterValues[3].value}         // New
+        releaseYearFilter={filterValues[2].value}
+        sortOrder={filterValues[3].value}
       />
       <TVSeriesListPageTemplate
         title="Discover TV Series"
@@ -82,6 +93,11 @@ const TVSeriesPage: React.FC = () => {
             </Link>
           </>
         )}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data?.total_pages || 1}
+        onPageChange={handlePageChange}
       />
     </>
   );

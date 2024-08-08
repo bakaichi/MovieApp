@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
-import MovieFilterUI, {titleFilter, genreFilter, releaseYearFilter, releaseYearSort } from "../components/movieFilterUI";
+import MovieFilterUI, { titleFilter, genreFilter, releaseYearFilter, releaseYearSort } from "../components/movieFilterUI";
 import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
-
+import Pagination from "../Pagination";
 
 const titleFiltering = {
   name: "title",
@@ -20,14 +20,14 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
-// New release year filtering
+// release year filtering
 const releaseYearFiltering = {
   name: "releaseYear",
   value: "",
   condition: releaseYearFilter,
 };
 
-// New sorting by release year
+//  sorting by release year
 const releaseYearSorting = {
   name: "sortOrder",
   value: "asc",
@@ -36,9 +36,15 @@ const releaseYearSorting = {
 };
 
 const HomePage: React.FC = () => {
-  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>("discover", getMovies);
+  const [currentPage, setCurrentPage] = useState(1);
   const { filterValues, setFilterValues, filterFunction, sortFunction } = useFiltering(
     [titleFiltering, genreFiltering, releaseYearFiltering, releaseYearSorting]
+  );
+
+  const { data, error, isLoading, isError } = useQuery<DiscoverMovies, Error>(
+    ["discover", currentPage],
+    () => getMovies(currentPage),
+    { keepPreviousData: true, staleTime: 5000 }
   );
 
   if (isLoading) {
@@ -57,9 +63,13 @@ const HomePage: React.FC = () => {
     setFilterValues(updatedFilterSet);
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   const movies = data ? data.results : [];
   const filteredMovies = filterFunction(movies);
-  const displayedMovies = sortFunction(filteredMovies); // Apply sorting after filtering
+  const displayedMovies = sortFunction(filteredMovies);
 
   return (
     <>
@@ -74,8 +84,13 @@ const HomePage: React.FC = () => {
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
-        releaseYearFilter={filterValues[2].value} // New
-        sortOrder={filterValues[3].value}         // New
+        releaseYearFilter={filterValues[2].value}
+        sortOrder={filterValues[3].value}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={data?.total_pages || 1}
+        onPageChange={handlePageChange}
       />
     </>
   );
