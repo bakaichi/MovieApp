@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useAuth } from "../../contexts/authContext";
 
 const styles = {
     title: {
@@ -22,6 +23,7 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth(); 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement|null>(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
@@ -40,6 +42,11 @@ const SiteHeader: React.FC = () => {
 
   const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirect to login after logout
   };
 
   return (
@@ -87,6 +94,19 @@ const SiteHeader: React.FC = () => {
                     {opt.label}
                   </MenuItem>
                 ))}
+                {!isAuthenticated && (
+                  <>
+                    <MenuItem onClick={() => handleMenuSelect("/login")}>
+                      Login
+                    </MenuItem>
+                    <MenuItem onClick={() => handleMenuSelect("/register")}>
+                      Register
+                    </MenuItem>
+                  </>
+                )}
+                {isAuthenticated && (
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                )}
               </Menu>
             </>
           ) : (
@@ -100,6 +120,20 @@ const SiteHeader: React.FC = () => {
                   {opt.label}
                 </Button>
               ))}
+              {!isAuthenticated ? (
+                <>
+                  <Button color="inherit" onClick={() => handleMenuSelect("/login")}>
+                    Login
+                  </Button>
+                  <Button color="inherit" onClick={() => handleMenuSelect("/register")}>
+                    Register
+                  </Button>
+                </>
+              ) : (
+                <Button color="inherit" onClick={handleLogout}>
+                  Logout
+                </Button>
+              )}
             </>
           )}
         </Toolbar>
