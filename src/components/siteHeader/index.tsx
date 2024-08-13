@@ -23,8 +23,8 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth(); 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement|null>(null);
+  const { isAuthenticated, logout } = useAuth(); // Use useAuth for auth state
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -38,6 +38,7 @@ const SiteHeader: React.FC = () => {
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);
+    setAnchorEl(null); // Close the menu after selecting an option
   };
 
   const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {
@@ -86,15 +87,19 @@ const SiteHeader: React.FC = () => {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                {menuOptions.map((opt) => (
-                  <MenuItem
-                    key={opt.label}
-                    onClick={() => handleMenuSelect(opt.path)}
-                  >
-                    {opt.label}
-                  </MenuItem>
-                ))}
-                {!isAuthenticated && (
+                {isAuthenticated ? (
+                  <>
+                    {menuOptions.map((opt) => (
+                      <MenuItem
+                        key={opt.label}
+                        onClick={() => handleMenuSelect(opt.path)}
+                      >
+                        {opt.label}
+                      </MenuItem>
+                    ))}
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </>
+                ) : (
                   <>
                     <MenuItem onClick={() => handleMenuSelect("/login")}>
                       Login
@@ -104,23 +109,26 @@ const SiteHeader: React.FC = () => {
                     </MenuItem>
                   </>
                 )}
-                {isAuthenticated && (
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                )}
               </Menu>
             </>
           ) : (
             <>
-              {menuOptions.map((opt) => (
-                <Button
-                  key={opt.label}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(opt.path)}
-                >
-                  {opt.label}
-                </Button>
-              ))}
-              {!isAuthenticated ? (
+              {isAuthenticated ? (
+                <>
+                  {menuOptions.map((opt) => (
+                    <Button
+                      key={opt.label}
+                      color="inherit"
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
+                      {opt.label}
+                    </Button>
+                  ))}
+                  <Button color="inherit" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </>
+              ) : (
                 <>
                   <Button color="inherit" onClick={() => handleMenuSelect("/login")}>
                     Login
@@ -129,10 +137,6 @@ const SiteHeader: React.FC = () => {
                     Register
                   </Button>
                 </>
-              ) : (
-                <Button color="inherit" onClick={handleLogout}>
-                  Logout
-                </Button>
               )}
             </>
           )}
