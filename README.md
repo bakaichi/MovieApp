@@ -10,3 +10,4 @@
 - Private and public routes added
 - Login and register form updated 
 - Login and register functionality improved 
+- Favourite tv series
