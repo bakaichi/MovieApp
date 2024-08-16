@@ -81,12 +81,6 @@
     movieId: number,
   }
 
-  export interface BaseTVSeriesProps extends BaseMovieProps {
-    first_air_date: string;
-    episode_count?: number;
-    season_count?: number;
-  }
-
   export interface DiscoverTVSeries {
     page: number;
     total_pages: number;
@@ -106,6 +100,7 @@
     number_of_seasons: number;
     number_of_episodes: number;
     homepage: string;
+    favorite?: boolean;
   }
 
   export interface Actor {

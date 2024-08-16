@@ -1,4 +1,3 @@
-// TVSeriesCard.tsx
 import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -13,7 +12,10 @@ import Grid from "@mui/material/Grid";
 import img from "../../images/film-poster-placeholder.png";
 import { BaseTVSeriesProps } from "../../types/interfaces";
 import Avatar from "@mui/material/Avatar";
-import { MoviesContext } from "../../contexts/moviesContext";
+import { SeriesContext } from "../../contexts/tvSeriesContext"; 
+import AddToFavouritesIcon from "../cardIcons/addToFavourites"; 
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -29,8 +31,9 @@ interface TVSeriesCardProps {
 }
 
 const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ series, action }) => {
-  const { favourites } = useContext(MoviesContext);
-  const isFavourite = favourites.find((id) => id === series.id) ? true : false;
+  const { favourites } = useContext(SeriesContext); 
+  const isFavourite = favourites.includes(series.id);
+
   return (
     <Card sx={styles.card}>
       <CardHeader
@@ -72,7 +75,13 @@ const TVSeriesCard: React.FC<TVSeriesCardProps> = ({ series, action }) => {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
+        {!isFavourite && <AddToFavouritesIcon item={series} isMovie={false} />} 
         {action(series)}
+        <Link to={`/tv-series/${series.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
