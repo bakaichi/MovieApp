@@ -14,10 +14,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAuth } from "../../contexts/authContext";
 
 const styles = {
-    title: {
-      flexGrow: 1,
-    },
-  };
+  title: {
+    flexGrow: 1,
+  },
+};
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -25,17 +25,20 @@ const SiteHeader: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth(); // Use useAuth for auth state
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const open = Boolean(anchorEl);
+  const [favoritesAnchorEl, setFavoritesAnchorEl] = useState<null | HTMLElement>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Tv-Series", path: "/tv-series" },
-    { label: "Fantasy Movies", path: "/fantasy-movies" },
     { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Fantasy Movies", path: "/fantasy-movies" },
+  ];
+
+  const favoritesOptions = [
     { label: "Favorite Movies", path: "/movies/favourites" },
-    { label: "Favorite Series", path: "/tv-series/favourites"},
+    { label: "Favorite Series", path: "/tv-series/favourites" },
   ];
 
   const handleMenuSelect = (pageURL: string) => {
@@ -43,8 +46,12 @@ const SiteHeader: React.FC = () => {
     setAnchorEl(null); // Close the menu after selecting an option
   };
 
-  const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleFavoritesOpen = (event: MouseEvent<HTMLButtonElement>) => {
+    setFavoritesAnchorEl(event.currentTarget);
+  };
+
+  const handleFavoritesClose = () => {
+    setFavoritesAnchorEl(null);
   };
 
   const handleLogout = () => {
@@ -68,7 +75,7 @@ const SiteHeader: React.FC = () => {
                 aria-label="menu"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleMenu}
+                onClick={(event) => setAnchorEl(event.currentTarget)}
                 color="inherit"
                 size="large"
               >
@@ -86,7 +93,7 @@ const SiteHeader: React.FC = () => {
                   vertical: "top",
                   horizontal: "right",
                 }}
-                open={open}
+                open={Boolean(anchorEl)}
                 onClose={() => setAnchorEl(null)}
               >
                 {isAuthenticated ? (
@@ -126,6 +133,33 @@ const SiteHeader: React.FC = () => {
                       {opt.label}
                     </Button>
                   ))}
+                  <Button
+                    color="inherit"
+                    aria-controls={favoritesAnchorEl ? "favorites-menu" : undefined}
+                    aria-haspopup="true"
+                    onMouseEnter={handleFavoritesOpen}
+                    onClick={handleFavoritesOpen}
+                  >
+                    Favorites
+                  </Button>
+                  <Menu
+                    id="favorites-menu"
+                    anchorEl={favoritesAnchorEl}
+                    open={Boolean(favoritesAnchorEl)}
+                    onClose={handleFavoritesClose}
+                    MenuListProps={{
+                      onMouseLeave: handleFavoritesClose,
+                    }}
+                  >
+                    {favoritesOptions.map((opt) => (
+                      <MenuItem
+                        key={opt.label}
+                        onClick={() => handleMenuSelect(opt.path)}
+                      >
+                        {opt.label}
+                      </MenuItem>
+                    ))}
+                  </Menu>
                   <Button color="inherit" onClick={handleLogout}>
                     Logout
                   </Button>
