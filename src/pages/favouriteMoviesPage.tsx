@@ -22,7 +22,7 @@ const genreFiltering = {
 
 const FavouriteMoviesPage: React.FC = () => {
   const { favourites: movieIds } = useContext(MoviesContext);
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
+  const { filterFunction } = useFiltering(
     [titleFiltering, genreFiltering]
   );
 
@@ -56,9 +56,6 @@ const FavouriteMoviesPage: React.FC = () => {
           </>
         )}
       />
-        onFilterValuesChange={setFilterValues}
-        titleFilter={filterValues[0].value}
-        genreFilter={filterValues[1].value}
     </>
   );
 };
