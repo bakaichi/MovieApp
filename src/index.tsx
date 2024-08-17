@@ -21,6 +21,7 @@ import SeriesContextProvider from "./contexts/tvSeriesContext";
 import FavouriteTVSeriesPage from "./pages/favoriteTVSeriesPage";
 import FantasyMoviesPage from "./pages/fantasyMoviesPage";
 import { FantasyMoviesProvider } from "./contexts/fantasyMoviesContext";
+import FantasyMovieDetailsPage from "./pages/fantasyMovieDetailsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,6 +57,7 @@ const App = () => {
                           <Route path="/tv-series/:id" element={<PrivateRoute component={TVSeriesDetailsPage} />} />
                           <Route path="/tv-series/favourites" element={<PrivateRoute component={FavouriteTVSeriesPage} />} />
                           <Route path="/fantasy-movies" element={<PrivateRoute component={FantasyMoviesPage} />} />
+                          <Route path="/fantasy-movies/:title" element={<PrivateRoute component={FantasyMovieDetailsPage} />} />
                           {/* redirect unknown paths to home or login */}
                           <Route path="*" element={<Navigate to="/" />} />
                       </Routes>

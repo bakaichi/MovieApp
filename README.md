@@ -12,4 +12,5 @@
 - Login and register functionality improved 
 - Favourite tv series
 - Multi Criteria Movie search
-- Create Fantasy Movie (basic implementation listed page)
+- Create Fantasy Movie (basic implementation listed page) + movie poster
+- Fantasy Movie details page. to display -> Title, Overview, Genres, Release Date, Runtime, and Production Company(s)

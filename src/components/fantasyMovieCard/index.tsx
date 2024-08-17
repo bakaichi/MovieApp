@@ -5,16 +5,19 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
-import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import Grid from "@mui/material/Grid";
-import img from "../../images/film-poster-placeholder.png";
-import { FantasyMovieProps } from "../../types/interfaces";
 import Button from "@mui/material/Button";
+import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import { Link } from "react-router-dom";
+import { FantasyMovieProps } from "../../types/interfaces";
+
 
 const styles = {
   card: { maxWidth: 345 },
   media: { height: 500 },
+  avatar: {
+    backgroundColor: "rgb(255, 0, 0)",
+  },
 };
 
 interface FantasyMovieCardProps {
@@ -32,9 +35,9 @@ const FantasyMovieCard: React.FC<FantasyMovieCardProps> = ({ movie }) => {
         }
       />
       <CardMedia
-        component="img"  // render img as an element
+        component="img"
         sx={styles.media}
-        image={movie.image || img}
+        image={movie.image}
         alt={movie.title}
       />
       <CardContent>
