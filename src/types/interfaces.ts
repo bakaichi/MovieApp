@@ -153,3 +153,13 @@
     releaseYearFilter: string; // New
     sortOrder: string;         // New
   }
+
+  export interface FantasyMovieProps {
+    image: string;
+    title: string;
+    overview: string;
+    genres: string[];
+    releaseDate: string;
+    runtime: string;
+    productionCompanies: string[];
+  }

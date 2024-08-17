@@ -12,3 +12,4 @@
 - Login and register functionality improved 
 - Favourite tv series
 - Multi Criteria Movie search
+- Create Fantasy Movie (basic implementation listed page)
