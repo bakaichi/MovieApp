@@ -3,7 +3,7 @@ import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, { titleFilter, genreFilter, releaseYearFilter, releaseYearSort } from "../components/movieFilterUI";
-import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
+import { DiscoverMovies } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import Pagination from "../Pagination";
@@ -75,7 +75,7 @@ const HomePage: React.FC = () => {
       <PageTemplate
         title="Discover Movies"
         movies={filterFunction(sortFunction(data?.results || []))}
-        action={(movie: BaseMovieProps) => null}
+        action={() => null}
       />
       
       <MovieFilterUI

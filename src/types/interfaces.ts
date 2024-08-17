@@ -154,6 +154,12 @@
     sortOrder: string;         // New
   }
 
+  export interface CastMember {
+    name: string;
+    role: string;
+    description: string;
+  }
+
   export interface FantasyMovieProps {
     image: string;
     title: string;
@@ -162,4 +168,5 @@
     releaseDate: string;
     runtime: string;
     productionCompanies: string[];
+    cast: CastMember[];  
   }

@@ -22,6 +22,12 @@ const styles = {
     chipLabel: {
         margin: 0.5,
     },
+    castContainer: {
+        marginTop: "20px",
+    },
+    castMember: {
+        marginBottom: "10px",
+    },
 };
 
 const FantasyMovieDetails: React.FC<FantasyMovieProps> = (movie) => {
@@ -57,6 +63,26 @@ const FantasyMovieDetails: React.FC<FantasyMovieProps> = (movie) => {
                         ))}
                     </Paper>
                 </Grid>
+
+                {movie.cast && movie.cast.length > 0 && (
+                    <Grid item xs={12}>
+                        <div style={styles.castContainer}>
+                            <Typography variant="h5" component="h3">
+                                Cast
+                            </Typography>
+                            {movie.cast.map((member, index) => (
+                                <div key={index} style={styles.castMember}>
+                                    <Typography variant="h6" component="p">
+                                        {member.name} - {member.role}
+                                    </Typography>
+                                    <Typography variant="body1" component="p">
+                                        {member.description}
+                                    </Typography>
+                                </div>
+                            ))}
+                        </div>
+                    </Grid>
+                )}
             </Grid>
         </Paper>
     );
