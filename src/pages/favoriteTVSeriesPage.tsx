@@ -8,7 +8,6 @@ import useFiltering from "../hooks/useFiltering";
 import TVSeriesFilterUI, { titleFilter, genreFilter } from "../components/tvSeriesFilterUI";
 import RemoveFromFavouritesIcon from "../components/cardIcons/removeFromFavourites";
 import WriteReviewIcon from "../components/cardIcons/writeReview";
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const titleFiltering = {
@@ -64,9 +63,6 @@ const FavouriteTVSeriesPage: React.FC = () => {
             <RemoveFromFavouritesIcon item={series} isMovie={false} />
             <WriteReviewIcon item={series} isMovie={false} />
             <Link to={`/tv-series/${series.id}`}>
-              <Button variant="outlined" size="medium" color="primary">
-                More Info ...
-              </Button>
             </Link>
           </>
         )}
