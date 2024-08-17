@@ -5,7 +5,7 @@ import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
-import MovieFilterUI, { titleFilter, genreFilter } from "../components/movieFilterUI";
+import { titleFilter, genreFilter } from "../components/movieFilterUI";
 import RemoveFromFavouritesIcon from "../components/cardIcons/removeFromFavourites";
 import WriteReviewIcon from "../components/cardIcons/writeReview";
 
@@ -56,11 +56,9 @@ const FavouriteMoviesPage: React.FC = () => {
           </>
         )}
       />
-      <MovieFilterUI
         onFilterValuesChange={setFilterValues}
         titleFilter={filterValues[0].value}
         genreFilter={filterValues[1].value}
-      />
     </>
   );
 };

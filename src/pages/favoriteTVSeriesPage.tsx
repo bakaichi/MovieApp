@@ -70,8 +70,7 @@ const FavouriteTVSeriesPage: React.FC = () => {
       <TVSeriesFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
-        genreFilter={filterValues[1].value}
-      />
+        genreFilter={filterValues[1].value} releaseYearFilter={""} sortOrder={""}      />
     </>
   );
 };

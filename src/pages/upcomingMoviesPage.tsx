@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import { BaseMovieProps } from "../types/interfaces";
 import { getUpcomingMovies } from "../api/tmdb-api";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import IconButton from '@mui/material/IconButton';
 
 const UpcomingMoviesPage: React.FC = () => {
@@ -19,10 +18,9 @@ const UpcomingMoviesPage: React.FC = () => {
     <PageTemplate
       title='Upcoming Movies'
       movies={movies}
-      action={(movie: BaseMovieProps) => {
+      action={() => {
         return (
           <IconButton>
-            <PlaylistAddIcon {...movies}/>
           </IconButton>
         );
       }}

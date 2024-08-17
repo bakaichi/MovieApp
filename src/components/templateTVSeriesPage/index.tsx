@@ -43,7 +43,7 @@ const TemplateTVSeriesPage: React.FC<TemplateTVSeriesPageProps> = ({ series, chi
 
   return (
     <>
-      <TVSeriesHeader {...series} />
+      <TVSeriesHeader title={""} {...series} />
 
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid item xs={3}>
