@@ -7,6 +7,9 @@ import { BaseMovieProps, DiscoverMovies } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import Pagination from "../Pagination";
+import SearchMoviesForm from "../components/searchMovieCard";
+import Fab from "@mui/material/Fab";
+import { Button } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -36,6 +39,7 @@ const releaseYearSorting = {
 
 const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { filterValues, setFilterValues, filterFunction, sortFunction } = useFiltering(
     [titleFiltering, genreFiltering, releaseYearFiltering, releaseYearSorting]
   );
@@ -66,17 +70,14 @@ const HomePage: React.FC = () => {
     setCurrentPage(page);
   };
 
-  const movies = data ? data.results : [];
-  const filteredMovies = filterFunction(movies);
-  const displayedMovies = sortFunction(filteredMovies);
-
   return (
     <>
       <PageTemplate
         title="Discover Movies"
-        movies={displayedMovies}
+        movies={filterFunction(sortFunction(data?.results || []))}
         action={(movie: BaseMovieProps) => null}
       />
+      
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
@@ -84,6 +85,33 @@ const HomePage: React.FC = () => {
         releaseYearFilter={filterValues[2].value}
         sortOrder={filterValues[3].value}
       />
+      <Fab
+        color="primary"
+        variant="extended"
+        onClick={() => setSearchOpen(true)}
+        sx={{ 
+          position: "fixed", 
+          top: "11vh", 
+          right: "11vh", 
+        }}
+      >
+        Search Movies
+      </Fab>
+      {searchOpen && (
+        <div style={{ 
+          position: "fixed", 
+          top: 0, 
+          left: 0, 
+          width: "200px", 
+          height: "100vh", 
+          backgroundColor: "white", 
+          padding: "10vh", 
+          boxShadow: "0 0 15px rgba(0,0,0,0.3)", 
+        }}>
+          <SearchMoviesForm />
+          <Button onClick={() => setSearchOpen(false)}>Close</Button>
+        </div>
+      )}
       <Pagination
         currentPage={currentPage}
         totalPages={data?.total_pages || 1}

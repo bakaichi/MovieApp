@@ -167,3 +167,19 @@ export const getMovie = (id: string) => {
         throw error;
       });
   };
+
+  export const searchMovies = async (searchParams: { title?: string; genre?: number; releaseYear?: string }) => {
+    const { title, genre, releaseYear } = searchParams;
+    const query = new URLSearchParams();
+  
+    if (title) query.append("query", title);
+    if (genre) query.append("with_genres", genre.toString());
+    if (releaseYear) query.append("year", releaseYear);
+  
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&${query.toString()}`;
+  
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Unable to fetch movies. Response status: ${response.status}`);
+    return response.json();
+  };
+  
