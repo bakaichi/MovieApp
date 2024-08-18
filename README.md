@@ -4,7 +4,7 @@
 
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://movie-app-chi-drab.vercel.app/login)
 
-Access the deployed app at: [movie-app-chi-drab.vercel.app](https://movie-app-chi-drab.vercel.app/login)
+Access the deployed app at: [movie-app-chi-drab.vercel.app](https://movie-app-chi-drab.vercel.app)
 
 ## 🛠️ Technologies Used
 
