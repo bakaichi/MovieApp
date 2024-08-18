@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { searchMovies } from '../../api/tmdb-api';
 import Spinner from '../spinner';
@@ -40,12 +40,6 @@ const SearchMoviesCard: React.FC = () => {
     refetch();
   };
 
-  useEffect(() => {
-    if (Object.keys(searchParams).length > 0) {
-      refetch();
-    }
-  }, [searchParams, refetch]);
-
   if (isLoading) {
     return <Spinner />;
   }
@@ -66,11 +60,19 @@ const SearchMoviesCard: React.FC = () => {
           />
         </FormControl>
         
-        <FormControl sx={styles.formControl}>
+        <FormControl
+          sx={styles.formControl}
+        >
           <InputLabel>Genre</InputLabel>
           <Select
             value={genre}
             onChange={(e) => setGenre(Number(e.target.value))}
+            MenuProps={{
+              disablePortal: true, // render dropdown
+              MenuListProps: {
+                onClick: (event) => event.stopPropagation(), // prevent the form from closing when interacting with the dropdown
+              },
+            }}
           >
             <MenuItem value={0}>All</MenuItem>
             <MenuItem value={28}>Action</MenuItem>
