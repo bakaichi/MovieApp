@@ -111,9 +111,9 @@ const HomePage: React.FC = () => {
         variant="extended"
         onClick={() => setSearchOpen(true)}
         sx={{ 
-          position: "fixed", 
-          top: "11vh", 
-          right: "11vh", 
+          position: "fixed",   // button 
+          top: "85px", 
+          right: "90px", 
         }}
       >
         Search Movies
