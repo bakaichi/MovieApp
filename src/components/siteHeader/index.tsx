@@ -46,7 +46,7 @@ const SiteHeader: React.FC = () => {
     setAnchorEl(null); // Close the menu after selecting an option
   };
 
-  const handleFavoritesOpen = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleFavoritesClick = (event: MouseEvent<HTMLButtonElement>) => {
     setFavoritesAnchorEl(event.currentTarget);
   };
 
@@ -137,8 +137,7 @@ const SiteHeader: React.FC = () => {
                     color="inherit"
                     aria-controls={favoritesAnchorEl ? "favorites-menu" : undefined}
                     aria-haspopup="true"
-                    onMouseEnter={handleFavoritesOpen}
-                    onClick={handleFavoritesOpen}
+                    onClick={handleFavoritesClick} 
                   >
                     Favorites
                   </Button>
@@ -147,9 +146,6 @@ const SiteHeader: React.FC = () => {
                     anchorEl={favoritesAnchorEl}
                     open={Boolean(favoritesAnchorEl)}
                     onClose={handleFavoritesClose}
-                    MenuListProps={{
-                      onMouseLeave: handleFavoritesClose,
-                    }}
                   >
                     {favoritesOptions.map((opt) => (
                       <MenuItem
