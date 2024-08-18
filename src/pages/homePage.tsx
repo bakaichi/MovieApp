@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
@@ -40,6 +40,8 @@ const releaseYearSorting = {
 const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchOpen, setSearchOpen] = useState(false);
+  const searchPanelRef = useRef<HTMLDivElement>(null);
+
   const { filterValues, setFilterValues, filterFunction, sortFunction } = useFiltering(
     [titleFiltering, genreFiltering, releaseYearFiltering, releaseYearSorting]
   );
@@ -49,6 +51,25 @@ const HomePage: React.FC = () => {
     () => getMovies(currentPage),
     { keepPreviousData: true, staleTime: 5000 }
   );
+
+  // function to ensure search form exits when clicked outside of it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchPanelRef.current && !searchPanelRef.current.contains(event.target as Node)) {
+        setSearchOpen(false);
+      }
+    };
+
+    if (searchOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchOpen]);
 
   if (isLoading) {
     return <Spinner />;
@@ -98,16 +119,19 @@ const HomePage: React.FC = () => {
         Search Movies
       </Fab>
       {searchOpen && (
-        <div style={{ 
-          position: "fixed", 
-          top: 0, 
-          left: 0, 
-          width: "200px", 
-          height: "100vh", 
-          backgroundColor: "white", 
-          padding: "10vh", 
-          boxShadow: "0 0 15px rgba(0,0,0,0.3)", 
-        }}>
+        <div
+          ref={searchPanelRef}
+          style={{ 
+            position: "fixed", 
+            top: 0, 
+            left: 0, 
+            width: "200px", 
+            height: "100vh", 
+            backgroundColor: "white", 
+            padding: "10vh", 
+            boxShadow: "0 0 15px rgba(0,0,0,0.3)", 
+          }}
+        >
           <SearchMoviesForm />
           <Button onClick={() => setSearchOpen(false)}>Close</Button>
         </div>
