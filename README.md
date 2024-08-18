@@ -61,7 +61,7 @@ You can log in using the following test account:
 - Login and register functionality improved.
 - Favorite TV series functionality.
 - Multi-criteria Movie search.
-- Basic implementation of the Fantasy Movie listing page with movie posters.
+- Fantasy Movie listing page with movie posters with a form to add a new one  (Cast, Cast Roles, Movie Poster, Description, Production Date etc.. ).
 - Fantasy Movie details page displaying title, overview, genres, release date, runtime, and production company(s).
 - Cast can be added with role names and descriptions, displayed on the detail view.
 - Google Auth added as a login option.
