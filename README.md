@@ -1,19 +1,68 @@
-# React + TypeScript + Vite
+# Movie App
 
-## Work Completed 
-- New list page for TV series + routing + data hyperlinking
-- Detail view for series + additional data entries (seasons, episodes, actors and actor images)
-- Similiar series suggested in detail view
-- UI improvements for TV series 
-- Extended filtering for Movies and TV series (search by year, sort by asc or desc)
-- Pagination for TV series and Movies list pages
-- Private and public routes added
-- Login and register form updated 
-- Login and register functionality improved 
-- Favourite tv series
-- Multi Criteria Movie search
-- Create Fantasy Movie (basic implementation listed page) + movie poster
-- Fantasy Movie details page. to display -> Title, Overview, Genres, Release Date, Runtime, and Production Company(s)
-- Cast can be added with (role name and description) displayed on detail view
-- Google Auth for a login option
-- App deployed @ https://movie-app-chi-drab.vercel.app/login 
+## 🚀 Deployment
+
+[![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://movie-app-chi-drab.vercel.app/login)
+
+Access the deployed app at: [movie-app-chi-drab.vercel.app](https://movie-app-chi-drab.vercel.app/login)
+
+## 🛠️ Technologies Used
+
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=mui&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+## 📝 Project Description
+
+The Movie App is a comprehensive platform where users can explore movies and TV series, view detailed information, and manage their favorites. It features an extensive filtering and sorting system, user authentication including Google Auth, and a private route system to ensure secure access to user-specific features.
+
+## 🔑 Test Account
+
+You can log in using the following test account:
+
+- **Username:** homer
+- **Password:** simpson
+
+## 📚 Features
+
+### General Features
+- **Multi-criteria Search**: Advanced filtering and sorting for movies and TV series based on various criteria.
+- **Pagination**: Smooth pagination for both movies and TV series lists.
+
+### TV Series
+- **TV Series List Page**: A dedicated page listing TV series with routing and data hyperlinking.
+- **TV Series Detail View**: View additional information including seasons, episodes, actors, and actor images.
+- **Similar Series Suggestions**: Recommendations for similar TV series in the detail view.
+- **Favorite TV Series**: Mark your favorite TV series and access them quickly.
+
+### Movies
+- **Extended Movie Filtering**: Enhanced search functionality allowing filtering by year and sorting in ascending or descending order.
+- **Fantasy Movie Creation**: Create your own fantasy movies with custom posters, genres, and cast information.
+- **Fantasy Movie Details**: Display title, overview, genres, release date, runtime, and production company(s).
+- **Cast Information**: Add and display cast members with roles and descriptions.
+
+### Authentication
+- **Public and Private Routes**: Secure access to user-specific features and pages.
+- **Login and Register Forms**: Improved UI and functionality for a seamless user experience.
+- **Google Auth Integration**: Quick and secure login with Google.
+
+## 📦 Work Completed
+
+- New list page for TV series with routing and data hyperlinking.
+- Detail view for TV series with additional data entries (seasons, episodes, actors, and actor images).
+- Similar series suggested in the detail view.
+- UI improvements for TV series.
+- Extended filtering for Movies and TV series (search by year, sort by ascending or descending order).
+- Pagination for TV series and Movies list pages.
+- Private and public routes added.
+- Login and register form updated.
+- Login and register functionality improved.
+- Favorite TV series functionality.
+- Multi-criteria Movie search.
+- Basic implementation of the Fantasy Movie listing page with movie posters.
+- Fantasy Movie details page displaying title, overview, genres, release date, runtime, and production company(s).
+- Cast can be added with role names and descriptions, displayed on the detail view.
+- Google Auth added as a login option.
+- Application deployed on Vercel.
