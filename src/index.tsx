@@ -1,12 +1,12 @@
 import React from "react";
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage"; 
 import MovieReviewPage from "./pages/movieReviewPage";
-import SiteHeader from './components/siteHeader'
-import UpcomingMoviesPage from './pages/upcomingMoviesPage'
+import SiteHeader from './components/siteHeader';
+import UpcomingMoviesPage from './pages/upcomingMoviesPage';
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import MoviesContextProvider from "./contexts/moviesContext";
@@ -22,6 +22,7 @@ import FavouriteTVSeriesPage from "./pages/favoriteTVSeriesPage";
 import FantasyMoviesPage from "./pages/fantasyMoviesPage";
 import { FantasyMoviesProvider } from "./contexts/fantasyMoviesContext";
 import FantasyMovieDetailsPage from "./pages/fantasyMovieDetailsPage";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,39 +36,41 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
-          <SiteHeader />
-            <MoviesContextProvider>
-              <SeriesContextProvider>
-                <FantasyMoviesProvider>
+    <GoogleOAuthProvider clientId="869242731939-7lo1npflh90e5eovm4n11i9nrudgid8l.apps.googleusercontent.com">
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <BrowserRouter>
+            <SiteHeader />
+              <MoviesContextProvider>
+                <SeriesContextProvider>
+                  <FantasyMoviesProvider>
                     <Routes>
-                          <Route path="/login" element={<LoginPage />} />
-                          <Route path="/register" element={<RegisterPage />} />
-                          
-                          {/* The following routes are all protected by PrivateRoute */}
-                          <Route path="/" element={<PrivateRoute component={HomePage} />} />
-                          <Route path="/movies/favourites" element={<PrivateRoute component={FavouriteMoviesPage} />} />
-                          <Route path="/movies/:id" element={<PrivateRoute component={MoviePage} />} />
-                          <Route path="/reviews/:id" element={<PrivateRoute component={MovieReviewPage} />} />
-                          <Route path="/movies/upcoming" element={<PrivateRoute component={UpcomingMoviesPage} />} />
-                          <Route path="/reviews/form" element={<PrivateRoute component={AddMovieReviewPage} />} />
-                          <Route path="/tv-series" element={<PrivateRoute component={TVSeriesPage} />} />
-                          <Route path="/tv-series/:id" element={<PrivateRoute component={TVSeriesDetailsPage} />} />
-                          <Route path="/tv-series/favourites" element={<PrivateRoute component={FavouriteTVSeriesPage} />} />
-                          <Route path="/fantasy-movies" element={<PrivateRoute component={FantasyMoviesPage} />} />
-                          <Route path="/fantasy-movies/:title" element={<PrivateRoute component={FantasyMovieDetailsPage} />} />
-                          {/* redirect unknown paths to home or login */}
-                          <Route path="*" element={<Navigate to="/" />} />
-                      </Routes>
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/register" element={<RegisterPage />} />
+                      
+                      {/* The following routes are all protected by PrivateRoute */}
+                      <Route path="/" element={<PrivateRoute component={HomePage} />} />
+                      <Route path="/movies/favourites" element={<PrivateRoute component={FavouriteMoviesPage} />} />
+                      <Route path="/movies/:id" element={<PrivateRoute component={MoviePage} />} />
+                      <Route path="/reviews/:id" element={<PrivateRoute component={MovieReviewPage} />} />
+                      <Route path="/movies/upcoming" element={<PrivateRoute component={UpcomingMoviesPage} />} />
+                      <Route path="/reviews/form" element={<PrivateRoute component={AddMovieReviewPage} />} />
+                      <Route path="/tv-series" element={<PrivateRoute component={TVSeriesPage} />} />
+                      <Route path="/tv-series/:id" element={<PrivateRoute component={TVSeriesDetailsPage} />} />
+                      <Route path="/tv-series/favourites" element={<PrivateRoute component={FavouriteTVSeriesPage} />} />
+                      <Route path="/fantasy-movies" element={<PrivateRoute component={FantasyMoviesPage} />} />
+                      <Route path="/fantasy-movies/:title" element={<PrivateRoute component={FantasyMovieDetailsPage} />} />
+                      {/* redirect unknown paths to home or login */}
+                      <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
                   </FantasyMoviesProvider>
               </SeriesContextProvider>  
             </MoviesContextProvider>
-        </BrowserRouter>
-      </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+          </BrowserRouter>
+        </AuthProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   );
 };
 
@@ -75,4 +78,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-)
+);

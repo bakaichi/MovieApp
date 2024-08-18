@@ -15,4 +15,5 @@
 - Create Fantasy Movie (basic implementation listed page) + movie poster
 - Fantasy Movie details page. to display -> Title, Overview, Genres, Release Date, Runtime, and Production Company(s)
 - Cast can be added with (role name and description) displayed on detail view
+- Google Auth for a login option
 - App deployed @ https://movie-app-chi-drab.vercel.app/login 

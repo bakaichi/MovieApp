@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/authContext';
 import { useNavigate, Link } from 'react-router-dom';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import Grid from '@mui/material/Grid';
 
 const styles: { [key: string]: React.CSSProperties } = {
@@ -40,6 +41,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '4px',
     fontSize: '16px',
     cursor: 'pointer',
+    marginBottom: '10px', 
+  },
+  googleButtonContainer: {
+    marginTop: '10px', 
   },
   text: {
     textAlign: 'center' as const,
@@ -55,13 +60,22 @@ const styles: { [key: string]: React.CSSProperties } = {
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     login(username, password);
     navigate('/'); // redirect to home
+  };
+
+  const handleGoogleLoginSuccess = (response: CredentialResponse) => {
+    loginWithGoogle(response);
+    navigate('/'); // redirect to home after Google login
+  };
+
+  const handleGoogleLoginFailure = () => {
+    alert('Google Login Failed');
   };
 
   return (
@@ -88,6 +102,12 @@ const LoginPage: React.FC = () => {
               Login
             </button>
           </form>
+          <div style={styles.googleButtonContainer}>
+            <GoogleLogin
+              onSuccess={handleGoogleLoginSuccess}
+              onError={handleGoogleLoginFailure}
+            />
+          </div>
           <p style={styles.text}>
             Don't have an account? <Link to="/register" style={styles.link}>Register here</Link>
           </p>
