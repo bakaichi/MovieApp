@@ -8,7 +8,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '85vh',
+    minHeight: '100vh', 
     backgroundColor: '#f0f0f0',
   },
   formContainer: {
@@ -28,7 +28,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: '5px',
     marginBottom: '15px',
     border: '1px solid #ccc',
-    borderRadius: '5px',
+    borderRadius: '4px',
     fontSize: '16px',
   },
   button: {
@@ -59,7 +59,7 @@ const RegisterPage: React.FC = () => {
 
   return (
     <Grid container style={styles.container}>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item>
         <div style={styles.formContainer}>
           <h2 style={styles.title}>Register</h2>
           <form onSubmit={handleSubmit}>
