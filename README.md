@@ -28,24 +28,24 @@ You can log in using the following test account:
 ## 📚 Features
 
 ### General Features
-- **Multi-criteria Search**: Advanced filtering and sorting for movies and TV series based on various criteria.
-- **Pagination**: Smooth pagination for both movies and TV series lists.
+- **Multi-criteria Search**: Filtering and sorting for movies and TV series based on various criteria.
+- **Pagination**: Pagination for both movies and TV series lists.
 
 ### TV Series
 - **TV Series List Page**: A dedicated page listing TV series with routing and data hyperlinking.
 - **TV Series Detail View**: View additional information including seasons, episodes, actors, and actor images.
 - **Similar Series Suggestions**: Recommendations for similar TV series in the detail view.
-- **Favorite TV Series**: Mark your favorite TV series and access them quickly.
+- **Favorite TV Series**: Mark your favorite TV series.
 
 ### Movies
-- **Extended Movie Filtering**: Enhanced search functionality allowing filtering by year and sorting in ascending or descending order.
+- **Extended Movie Filtering**: Search functionality allowing filtering by year and sorting in ascending or descending order.
 - **Fantasy Movie Creation**: Create your own fantasy movies with custom posters, genres, and cast information.
 - **Fantasy Movie Details**: Display title, overview, genres, release date, runtime, and production company(s).
 - **Cast Information**: Add and display cast members with roles and descriptions.
 
 ### Authentication
 - **Public and Private Routes**: Secure access to user-specific features and pages.
-- **Login and Register Forms**: Improved UI and functionality for a seamless user experience.
+- **Login and Register Forms**: Improved UI and functionality for user experience.
 - **Google Auth Integration**: Quick and secure login with Google.
 
 ## 📦 Work Completed
